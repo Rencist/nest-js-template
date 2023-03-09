@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// For Authentication
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model User {
+  id           String         @id @default(uuid())
+  name         String
+  email        String         @unique
+  no_telp      String
+  password     String
+  role         Role           @default(USER)
+  loginAttempt Login_Attempt?
+  createdAt    DateTime?      @default(now())
+  updatedAt    DateTime       @default(now())
+}
+
+model Login_Attempt {
+  id           Int       @id @default(autoincrement())
+  userId       String    @unique
+  user         User?     @relation(fields: [userId], references: [id])
+  limitTime    DateTime?
+  countAttempt Int
+}

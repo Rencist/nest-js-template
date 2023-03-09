@@ -1,0 +1,3 @@
+name,email,no_telp,password,role
+Admin,admin@testing.com,admin@2023,085161397832,ADMIN,
+User,user@testing.com,user@2023,085161397832,USER,
